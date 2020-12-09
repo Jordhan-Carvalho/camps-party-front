@@ -17,7 +17,7 @@ export default function Registration() {
       <RegContainer>
         {page === 1 ?
           <PersonalData personalData={personalData} setPersonalData = {serPersonalData} setPage={setPage} /> :
-          <TicketData setPersonalData = {serPersonalData} setPage={setPage} />
+          <TicketData personalData={personalData} setPersonalData = {serPersonalData} page={page} setPage={setPage} />
         }
       </RegContainer>
     </>

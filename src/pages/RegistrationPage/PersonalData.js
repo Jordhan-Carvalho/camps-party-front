@@ -6,7 +6,10 @@ import {useForm, Controller} from 'react-hook-form';
 export default function PersonalData({personalData, setPersonalData, setPage}){
   const { register, handleSubmit, control, errors } = useForm();
     const onSubmit = data => {
-        setPersonalData(data);
+        if(personalData && personalData.hasOwnProperty('type')){
+          const type = personalData.type;
+          setPersonalData({...data, type});
+        }else setPersonalData(data);
         setPage(2);
     }
 
