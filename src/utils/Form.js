@@ -25,7 +25,7 @@ const Form = styled.form`
       color: white;
     }
 
-    input, select{
+    input, select, label{
       background: transparent;
       outline: none;
       border-top: none;
@@ -34,7 +34,8 @@ const Form = styled.form`
       border-bottom: 1px solid #9A9999;
       font-family: var(--formFont);
       padding: 5px;
-      margin: 20px 0 5px 0;
+      margin: 15px 0 5px 0;
+      border-radius: 5px;
     }
 
     p{
@@ -46,6 +47,19 @@ const Form = styled.form`
       display: flex;
       justify-content: ${props => props.value};
       margin: 20px 0 0 0;
+    }
+
+    input[type=radio]{
+      display: none;
+    }
+
+    input[type=radio] + label{
+      cursor:pointer;
+    }
+
+    input[type=radio]:checked + label{
+      box-shadow: 0 0 4px #FFF;
+      
     }
 `;
 
