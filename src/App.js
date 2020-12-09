@@ -7,7 +7,7 @@ import Finished from "./pages/Finished";
 import Login from "./pages/Login";
 import PreRegistration from "./pages/PreRegistration";
 import PreRegSuccess from "./pages/PreRegSuccess";
-import Registration from "./pages/Registration";
+import Registration from "./pages/RegistrationPage/Registration";
 import RegistrationTrail from "./pages/RegistrationTrail";
 
 export default function App() {
