@@ -1,18 +1,24 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import {useForm} from 'react-hook-form';
+
 
 import Header from '../../components/Header';
 import PersonalData from "./PersonalData";
+import TicketData from "./TicketData"
 
 export default function Registration() {
-  const { register, handleSubmit, errors } = useForm();
   
+  const [personalData, serPersonalData] = useState(null);
+  const [page, setPage] = useState(1);
+  console.log(personalData);
   return(
     <>
       <Header />
       <RegContainer>
-        <PersonalData register={register} handleSubmit={handleSubmit} errors = {errors} />
+        {page === 1 ?
+          <PersonalData personalData={personalData} setPersonalData = {serPersonalData} setPage={setPage} /> :
+          <TicketData setPersonalData = {serPersonalData} setPage={setPage} />
+        }
       </RegContainer>
     </>
   )
@@ -23,6 +29,7 @@ const RegContainer = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 
   h2{

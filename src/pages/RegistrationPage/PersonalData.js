@@ -1,10 +1,13 @@
 import React from 'react';
 import Form from '../../utils/Form';
 import Button from '../../utils/Button';
+import {useForm, Controller} from 'react-hook-form';
 
-export default function PersonalData({register, handleSubmit, errors}){
+export default function PersonalData({personalData, setPersonalData, setPage}){
+  const { register, handleSubmit, control, errors } = useForm();
     const onSubmit = data => {
-        console.log(data);
+        setPersonalData(data);
+        setPage(2);
     }
 
     return(
@@ -12,33 +15,42 @@ export default function PersonalData({register, handleSubmit, errors}){
         <h2>Confirmar Inscrição</h2>
         <Form value='flex-end' onSubmit = {handleSubmit(onSubmit)}>
            <h3>Dados pessoais</h3>
-           <input 
+           <Controller
+              as={<input />}
+              control={control}
               name='name' 
               placeholder="Nome Completo" 
-              ref={register({
+              defaultValue={personalData ? personalData.name : ""} 
+              rules = {{
                 required: true,
                 minLength: 3,
-              })} 
-            />
+              }}
+           />
             {errors.name && errors.name.type === 'required' && <p>Preencha este campo!</p>}
             {errors.name && errors.name.type === 'minLength' && <p>Entrada inválida!</p>}
-           <input 
+            <Controller 
+              as={<input />}
+              control={control}
               name='address' 
-              placeholder="Endereço" 
-              ref={register({
+              placeholder="Endereço"
+              defaultValue={personalData ? personalData.address : ""} 
+              rules = {{
                 required: true,
-                minLength: 3
-              })} 
+                minLength: 3,
+              }}
             />
             {errors.address && errors.address.type === 'required' && <p>Preencha este campo!</p>}
             {errors.address && errors.address.type === 'minLength' && <p>Entrada inválida!</p>}
-           <input 
+            <Controller 
+              as={<input />}
+              control={control}
               name='phone' 
-              placeholder="Fone" 
-              ref={register({
+              placeholder="Fone"
+              defaultValue={personalData ? personalData.phone : ""} 
+              rules = {{
                 required: true,
-                minLength: 8
-              })} 
+                minLength: 8,
+              }}
             />
             {errors.phone && errors.phone.type === 'required' && <p>Preencha este campo!</p>}
             {errors.phone && errors.phone.type === 'minLength' && <p>Entrada inválida!</p>}
@@ -51,7 +63,7 @@ export default function PersonalData({register, handleSubmit, errors}){
            </select>
            {errors.gender && errors.gender.type === 'required' && <p>Preencha este campo!</p>}
            <div className= 'btn-container'>
-              <Button>Próximo</Button>
+              <Button type='submit'>Próximo</Button>
            </div>
         </Form>  
         </>
