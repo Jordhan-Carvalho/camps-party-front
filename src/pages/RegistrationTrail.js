@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 
@@ -6,6 +7,8 @@ import { useHistory } from 'react-router-dom';
 export default function RegistrationTrail() {
 
   const [page, setPage] = useState(1);
+  const [buttonAviability, setButtonAviability] = useState(true);
+
   const [morning, setMorning] = useState('Gaming');
   const [afternoon, setAfternoon] = useState('Gaming');
   const [night, setNight] = useState('Gaming');
@@ -23,10 +26,10 @@ export default function RegistrationTrail() {
     {id: 'Startups', name: 'Startups'}
   ];
 
-
+  useEffect( () => { sendTrailsToDatabase() }, [dayThree]);
 
   function nextPage(){
-    console.log(page);
+    
   
     if (page === 1){
       setDayOne({ 
@@ -66,7 +69,7 @@ export default function RegistrationTrail() {
                     "night": night}
                 });
 
-     sendTrailsToDatabase();
+     
 
     }
   }
@@ -82,16 +85,21 @@ export default function RegistrationTrail() {
 
 
   function sendTrailsToDatabase() {
+    setButtonAviability(false)
 
     const dataTrails = [dayOne, dayTwo, dayThree];
-    console.log(dataTrails);
+
+    const request = axios.post( `wwwwww`,{}, dataTrails );
+          
+        request.then(() => {
+          setButtonAviability(true);
+          history.push(`/fineshed`) 
+        });
+    
 
 
   }
   
-  // console.log(morning);
-  // console.log(afternoon);
-  // console.log(night);
 
   return (
     <ContainerBox>
@@ -127,10 +135,9 @@ export default function RegistrationTrail() {
             <div className="coverNight"></div>
 
             <select id="night" className="select" value={night} onChange={e => setNight( e.target.value)}>
-              <option value="Gaming" selected>Gaming</option>
-              <option value="Hacking">Hacking</option>
-              <option value="Makers">Makers</option>
-              <option value="Startups">Startups</option>
+             {listOptions.map((item) => (
+            <option key={item.id} value={item.id} selected>{item.name}</option>
+          ))} 
             </select>
 
         </div>
@@ -145,7 +152,7 @@ export default function RegistrationTrail() {
             ? <><button onClick = { () => backPage()}>  Anterior </button>
               <button onClick = { () => nextPage()}>Próximo > </button> </>
             : <><button onClick = { () => backPage()}>  Anterior </button>
-            <button onClick = { () => nextPage()}> Finalizar </button> </>}
+            <button onClick = { () => nextPage()} disabled = {!buttonAviability}> Finalizar </button> </>}
 
         </div>
         
@@ -176,9 +183,9 @@ const ContainerBox = styled.div `
     }
 
     h3 {
-          font-size: 2.25rem;
-          margin-bottom: 3rem;
-          margin-top: 2rem;
+        font-size: 2.25rem;
+        margin-bottom: 3rem;
+        margin-top: 2rem;
           
     }
 
@@ -256,12 +263,17 @@ const ContainerBox = styled.div `
     
     }
 
-
-
       @media(max-width: 800px) {
 
         h1 {
           font-size: 2rem;
+        }
+        
+        h3 {
+          
+          margin-bottom: 1.5rem;
+         
+          
         }
 
         .boxOptions {
@@ -271,25 +283,25 @@ const ContainerBox = styled.div `
 
           .slot {
             justify-content: center;
+            margin-left: 0;
+            margin-bottom: 1rem;
           }
 
           .boxButtons {
-          margin-top: 1.5rem;
+            margin-top: 1.5rem;
 
-          button {
-            width: 7rem;
-            height: 2rem;
-    
-          }
+            button {
+              width: 8rem;
+              height: 2rem;
+      
+            }
           
-        }
+          }
         
         }
 
         
 
       }
-
-
 
 `;
