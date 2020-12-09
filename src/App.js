@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import { createGlobalStyle } from "styled-components";
 
+import UserProvider from "./contexts/UserContext";
 import CountdownPage from "./pages/CountdownPage/CountdownPage";
 import Finished from "./pages/Finished";
 import Login from "./pages/Login";
@@ -9,23 +10,27 @@ import PreRegistration from "./pages/PreRegistration";
 import PreRegSuccess from "./pages/PreRegSuccess";
 import Registration from "./pages/Registration";
 import RegistrationTrail from "./pages/RegistrationTrail";
+import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 export default function App() {
   return (
-    <>
+    <UserProvider>
       <GlobalStyle />
       <Router>
         <Switch>
           <Route path="/pre-registration/success" component={PreRegSuccess} />
           <Route path="/pre-registration" component={PreRegistration} />
           <Route path="/login" component={Login} />
-          <Route path="/registration" component={Registration} />
-          <Route path="/registration-trail" component={RegistrationTrail} />
-          <Route path="/finished" component={Finished} />
+          <AuthenticatedRoute path="/registration" component={Registration} />
+          <AuthenticatedRoute
+            path="/registration-trail"
+            component={RegistrationTrail}
+          />
+          <AuthenticatedRoute path="/finished" component={Finished} />
           <Route path="/" exact component={CountdownPage} />
         </Switch>
       </Router>
-    </>
+    </UserProvider>
   );
 }
 
