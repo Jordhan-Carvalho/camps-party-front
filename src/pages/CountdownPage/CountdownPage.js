@@ -1,10 +1,9 @@
 import React from "react";
-import PreRegistration from "../PreRegistration";
 import planet from "../../assets/mundo.png";
 import logo from "../../assets/logo.png"
 import styled from "styled-components";
 import Countdown from "react-countdown";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 
 export default function CountdownPage() {  
@@ -19,7 +18,7 @@ export default function CountdownPage() {
       <div>
         <Logo src={logo} alt="campus party logo" />
         <div>
-          <StyledCountdown date={Date.now() + 1000} daysInHours={true}>
+          <StyledCountdown date={Date.now() + 5000} daysInHours={true}>
             <Link to="/pre-registration">           
               <GoToPage>              
                   <span>A ESPERA ACABOU! <br/> </span>
