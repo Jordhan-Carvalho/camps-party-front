@@ -34,7 +34,7 @@ const Form = styled.form`
       border-bottom: 1px solid #9A9999;
       font-family: var(--formFont);
       padding: 5px;
-      margin: 20px 0 5px 0;
+      margin: 15px 0 5px 0;
       border-radius: 5px;
     }
 

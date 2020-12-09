@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Form from '../../utils/Form';
 import Button from '../../utils/Button';
-import styled from 'styled-components';
 
-import tickets from '../../assets/tickets.png';
-import campingTent from '../../assets/camping.png';
-import hotel from '../../assets/hotel.png';
+import Label from '../../utils/Label'
 
-export default function TicketData({personalData, setPersonalData, page, setPage}){
+export default function TicketData({personalData, setPersonalData, setPage}){
    
    function getTicketType(e){
       const type = e.target.innerText;
@@ -52,38 +49,10 @@ export default function TicketData({personalData, setPersonalData, page, setPage
               
            <div className= 'btn-container'>
               <Button onClick={() => setPage(1)}>Anterior</Button>
-              <Button>Próximo</Button>
+              <Button onClick={() => setPage(3)}>Próximo</Button>
            </div>
         </Form>  
         </>
     )
 }
 
-const Label = styled.label`
-   display: flex;
-   align-items: center;
-   font-family: var(--formFont);
-   padding: 5px;
-   margin: 20px 0 5px 0;
-   border-radius: 5px;
-   div{
-      width: 2.5em;
-      height: 2.5em;
-      border-radius: 100%;
-      background-image: ${props => 
-         props.htmlFor === 'noAccommodation' ? 
-         `url(${tickets})`: 
-         props.htmlFor === 'camping' ? 
-         `url(${campingTent})` : 
-         `url(${hotel})`
-         };
-      background-size: contain;
-      background-repeat: no-repeat;
-      background-position: center;
-      margin: 0 15px 0 0;
-   }
-   p{
-      font-size: 1em;
-      color: white;
-   }
-`;
