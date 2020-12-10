@@ -1,30 +1,55 @@
 import React, { useState } from "react";
+import axios from "axios";
 import TicketSelection from "./TicketSelection"
 import Form from "../../utils/Form";
 import Button from "../../utils/Button";
 import styled from "styled-components";
+import { useHistory } from "react-router-dom";
 
 
 export default function PreRegistration() {
   const [email, setEmail] = useState("");
-  const [cpf, setCpf] = useState(null);
+  const [cpf, setCpf] = useState("");
   const [pwd, setPwd] = useState(""); 
-  const [pwdConfirm, setPwdConfirm] = useState(""); 
-  const [invalid, setInvalid] = useState(false);
-  const [chooseTicket,setChooseTicket] = useState(false);
+  const [pwdConfirm, setPwdConfirm] = useState("");
+  const [ticket, setTicket] = useState(null);
+  const [invalid, setInvalid] = useState("");
+  const [chooseTicket,setChooseTicket] = useState("");
+  const [persistTicketForm, setPersistTicketForm] = useState("");
+  const [loading,setLoading] = useState(false);
+
+  const history = useHistory();
+
+  const preRegInfo = {
+    email,
+    cpf,
+    password: pwd,
+    confirmPassword: pwdConfirm,   
+    ticket
+  };  
     
   const limitMaxLength = (element) => {
     if(element.target.value.length > 11) return;
     setCpf(element.target.value)
   };
 
-  const sendForm = (e) => {
-    e.preventDefault();
+  const nextForm = () => {    
     if(cpf.length < 11) return setInvalid("CPF inválido!");
     if(pwd !== pwdConfirm) return setInvalid("As senhas não são idênticas!")
     setInvalid(false);
     setChooseTicket(true);
-  }
+  };
+
+  const sendForm = (e) => {
+    e.preventDefault();
+    setPersistTicketForm(true)
+    if(!ticket) return setInvalid("Nenhum hotel selecionado!");
+    setInvalid(false);
+    setLoading(true);
+    axios.post("http://localhost:3000/api/users/sign-up",preRegInfo)
+      .then(()=> history.push("/pre-registration/success"))
+      .catch((err) => console.error(err))
+  };
 
   return (
     <>
@@ -34,7 +59,7 @@ export default function PreRegistration() {
       </Header>
       <Container>        
         <Form value="center" id="form1" onSubmit={sendForm}>
-          {!chooseTicket ? (
+          {!chooseTicket && !persistTicketForm ? (
             <>
               <input 
               type="email" 
@@ -67,12 +92,24 @@ export default function PreRegistration() {
               required
               />
               <div className="btn-container">
-                <Button type="submit">PROSSEGUIR</Button>            
+                <Button onClick={nextForm}>PROSSEGUIR</Button>            
               </div>
               {invalid ? <span className="invalid">{invalid}</span> : ""}
             </>
             ) : (
-              <h3>Escolha seu ingresso</h3>
+              <>
+                <h3>Escolha seu ingresso</h3>
+                <TicketSelection setTicket={setTicket} />
+                <div className="btn-container">
+                  {!loading ? (
+                     <Button type="submit">Finalizar</Button>
+                  ) : (
+                    <Button disabled={true} type="submit">Enviando...</Button>
+                  )}
+                             
+                </div>
+                {invalid ? <span className="invalid">{invalid}</span> : ""}
+              </>
             )
           }
         </Form>
@@ -114,7 +151,7 @@ const Container = styled.div`
     -webkit-appearance: none;
     margin: 0;
   }
-
+  
   .invalid{
     width:100%;
     text-align:center;

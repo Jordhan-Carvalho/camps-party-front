@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import planet from "../../assets/mundo.png";
 import logo from "../../assets/logo.png"
 import styled from "styled-components";
@@ -6,11 +7,16 @@ import Countdown from "react-countdown";
 import { Link } from "react-router-dom";
 
 
-export default function CountdownPage() {  
+export default function CountdownPage() {
 
-  //Mudar o event para ser pego via server-side
-  //Usar useEffect para rodar uma request á API
-  const event = new Date('December 11, 2020 18:00:00');  
+  //Initializing valid timer
+  const event = Date.now() + 5000; 
+  const [date,setDate] = useState(event)
+
+  useEffect(()=>{
+    axios.get("http://localhost:3000/api/users/countdown")
+    .then(({ data }) => setDate(data.event))
+  },[]);   
 
   return (
     <Container>
@@ -18,13 +24,20 @@ export default function CountdownPage() {
       <div>
         <Logo src={logo} alt="campus party logo" />
         <div>
-          <StyledCountdown date={Date.now() + 5000} daysInHours={true}>
-            <Link to="/pre-registration">           
-              <GoToPage>              
-                  <span>A ESPERA ACABOU! <br/> </span>
-                  <span>FAÇA JÁ SUA PRÉ INSCRIÇÃO!</span>              
-              </GoToPage>
-            </Link>
+          <StyledCountdown date={Date.now() + 3000} daysInHours={true}>
+            <div className="link-container">
+              <Link to="/pre-registration">           
+                <GoToPage>              
+                    <span>A ESPERA ACABOU! <br/> </span>
+                    <span>FAÇA JÁ SUA PRÉ INSCRIÇÃO!</span>              
+                </GoToPage>
+              </Link>
+              <Link to="/login">           
+                <GoToPage>              
+                    <span className="to-login">JÁ FIZ MINHA INSCRIÇÃO! <br/> </span>                                 
+                </GoToPage>
+              </Link>
+            </div>
           </StyledCountdown>
         </div>
       </div>
@@ -43,7 +56,7 @@ const Logo = styled.img`
 `;
 
 const StyledCountdown = styled(Countdown)`
-  font-size:8rem;
+  font-size:8rem;  
 `;
 
 const Container = styled.div`
@@ -67,6 +80,20 @@ const Container = styled.div`
       background-color:rgb(255,255,255,0.24);
     }
   }
+
+  .link-container{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:space-between;
+
+    button{
+      margin:1rem;
+    }
+    .to-login{
+      font-size: 1rem;      
+    }
+  }
 `;
 
 const GoToPage = styled.button`
@@ -77,9 +104,11 @@ const GoToPage = styled.button`
   border-radius:2rem;
   padding:1.5rem; 
   outline:none;
+  border:none;
   text-align:center;
   color:white;
   transition: 0.1s all ease-in;
+  box-shadow: 3px 5px 10px 0px rgba(0,0,0,0.45);
 
   &:hover{
     background-color: rgb(16,37,66,0.45);

@@ -46,6 +46,7 @@ export default function Login() {
           <Spinner />
         ) : (
           <>
+            <h3>Área do Participante</h3>
             <input
               type="email"
               placeholder="Email"
@@ -78,6 +79,9 @@ const CustomForm = styled(Form)`
   padding-bottom: 30px;
   input {
     width: 80%;
+  }
+  h3{
+    margin:1rem 0 2rem 0;
   }
 `;
 
