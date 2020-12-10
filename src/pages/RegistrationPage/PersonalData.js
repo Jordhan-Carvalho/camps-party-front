@@ -2,30 +2,33 @@ import React from 'react';
 import Form from '../../utils/Form';
 import Button from '../../utils/Button';
 import {useForm, Controller} from 'react-hook-form';
+import { useHistory } from 'react-router-dom';
 
-export default function PersonalData({personalData, setPersonalData, setPage}){
+export default function PersonalData({personalData, setPersonalData, setPage, setIsHotel, isHotel}){
   const { register, handleSubmit, control, errors } = useForm();
-    const onSubmit = data => {
-        if(personalData && personalData.hasOwnProperty('type')){
-          const type = personalData.type;
-          setPersonalData({...data, type});
-        }else setPersonalData(data);
-        setPage(2);
-    }
+  const history = useHistory();
 
-    return(
-        <>
-        <h2>Confirmar Inscrição</h2>
-        <Form value='flex-end' onSubmit = {handleSubmit(onSubmit)}>
-           <h3>Dados pessoais</h3>
-           <Controller
-              as={<input />}
-              control={control}
-              name='name' 
-              placeholder="Nome Completo" 
-              defaultValue={personalData ? personalData.name : ""} 
-              rules = {{
-                required: true,
+  const onSubmit = data => {
+    if(personalData && personalData.hasOwnProperty('hotel')){
+      const hotel = personalData.hotel;
+      setPersonalData({...data, hotel});
+    }else setPersonalData(data);
+    setPage(2);
+  }
+
+  return(
+      <>
+      <h2>Confirmar Inscrição</h2>
+      <Form value='flex-end' onSubmit = {handleSubmit(onSubmit)}>
+         <h3>Dados pessoais</h3>
+         <Controller
+            as={<input />}
+            control={control}
+            name='name' 
+            placeholder="Nome Completo" 
+            defaultValue={personalData ? personalData.name : ""} 
+            rules = {{
+              required: true,
                 minLength: 3,
               }}
            />
@@ -66,7 +69,7 @@ export default function PersonalData({personalData, setPersonalData, setPage}){
            </select>
            {errors.gender && errors.gender.type === 'required' && <p>Preencha este campo!</p>}
            <div className= 'btn-container'>
-              <Button type='submit'>Próximo</Button>
+              <Button type='submit'>{isHotel ? 'Próximo' : 'Finalizar'}</Button>
            </div>
         </Form>  
         </>

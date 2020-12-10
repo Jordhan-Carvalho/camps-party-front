@@ -67,7 +67,7 @@ export default function HotelData({personalData, setPersonalData, setPage, setIs
            <div className= 'btn-container'>
               <Button onClick={() => {
                   setIsHotel(false);
-                  setPage(2);
+                  setPage(1);
                 }}>Anterior</Button>
               <Button onClick={() => setPage(1)}>Finalizar</Button>
            </div>
