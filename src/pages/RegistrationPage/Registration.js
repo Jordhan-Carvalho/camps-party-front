@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Header from "../../components/Header";
 import PersonalData from "./PersonalData";
-import TicketData from "./TicketData";
 import HotelData from "./HotelData";
 import { userContext } from "../../contexts/UserContext";
 
@@ -40,16 +39,12 @@ export default function Registration() {
             <PersonalData 
               personalData={personalData} 
               setPersonalData = {serPersonalData} 
-              setPage={setPage} 
-              setIsHotel={setIsHotel} 
+              setPage={setPage}  
               isHotel = {isHotel} 
             /> :
             <HotelData 
-              personalData={personalData} 
-              setPersonalData = {serPersonalData} 
-              setPage={setPage} 
-              setIsHotel={setIsHotel} 
-              isHotel = {isHotel} 
+              personalData={personalData}  
+              setPage={setPage}  
             />
           }
       </RegContainer>
