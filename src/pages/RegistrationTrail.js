@@ -9,7 +9,7 @@ export default function RegistrationTrail() {
 
   const { user } = useContext(userContext);
   const [page, setPage] = useState(1);
-  const [buttonAviability, setButtonAviability] = useState(true);
+
 
   const [morning, setMorning] = useState('Gaming');
   const [afternoon, setAfternoon] = useState('Gaming');
@@ -18,6 +18,13 @@ export default function RegistrationTrail() {
   const [dayOne, setDayOne] = useState('');
   const [dayTwo, setDayTwo] = useState('');
   const [dayThree, setDayThree] = useState('');
+  
+  useEffect( () => { 
+    if (dayThree !== ''){
+      sendTrailsToDatabase()
+    }     
+  }, [dayThree]);
+  
   const history = useHistory();
 
   console.log(user.token);
@@ -29,9 +36,7 @@ export default function RegistrationTrail() {
     {id: 'Startups', name: 'Startups'}
   ];
 
-  useEffect( () => { 
-    console.log("useeffect deu certo") 
-    sendTrailsToDatabase() }, [dayThree]);
+  
 
   function nextPage(){
     
@@ -74,10 +79,12 @@ export default function RegistrationTrail() {
                     "night": night}
                 });
 
-     
-
     }
+
+    
   }
+
+ 
 
   function backPage(){
     if (page >1){
@@ -90,16 +97,13 @@ export default function RegistrationTrail() {
 
 
   function sendTrailsToDatabase() {
-    console.log("entrou aquii")
-    setButtonAviability(false)
 
     const dataTrails = [dayOne, dayTwo, dayThree];
 
-    const request = axios.post( `http://localhost:3000/api/trails/post-trails`, dataTrails, {headers: {"x-access-token": user.token}} );
+      const request = axios.post( `http://localhost:3000/api/trails/post-trails`, dataTrails, {headers: {"x-access-token": user.token}} );
           
         request.then(() => {
-          setButtonAviability(true);
-          history.push(`/fineshed`) 
+          history.push(`/finished`) 
         });
     
 
