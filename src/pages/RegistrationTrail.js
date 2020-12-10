@@ -1,13 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
-
+import { userContext } from "../contexts/UserContext";
+import Header from "../components/Header";
 
 export default function RegistrationTrail() {
 
+  const { user } = useContext(userContext);
   const [page, setPage] = useState(1);
-  const [buttonAviability, setButtonAviability] = useState(true);
+
 
   const [morning, setMorning] = useState('Gaming');
   const [afternoon, setAfternoon] = useState('Gaming');
@@ -16,8 +18,16 @@ export default function RegistrationTrail() {
   const [dayOne, setDayOne] = useState('');
   const [dayTwo, setDayTwo] = useState('');
   const [dayThree, setDayThree] = useState('');
+  
+  useEffect( () => { 
+    if (dayThree !== ''){
+      sendTrailsToDatabase()
+    }     
+  }, [dayThree]);
+  
   const history = useHistory();
 
+  console.log(user.token);
 
   const listOptions = [
     {id: 'Gaming', name: 'Gaming'},
@@ -26,7 +36,7 @@ export default function RegistrationTrail() {
     {id: 'Startups', name: 'Startups'}
   ];
 
-  useEffect( () => { sendTrailsToDatabase() }, [dayThree]);
+  
 
   function nextPage(){
     
@@ -69,10 +79,12 @@ export default function RegistrationTrail() {
                     "night": night}
                 });
 
-     
-
     }
+
+    
   }
+
+ 
 
   function backPage(){
     if (page >1){
@@ -85,15 +97,13 @@ export default function RegistrationTrail() {
 
 
   function sendTrailsToDatabase() {
-    setButtonAviability(false)
 
     const dataTrails = [dayOne, dayTwo, dayThree];
 
-    const request = axios.post( `wwwwww`,{}, dataTrails );
+      const request = axios.post( `http://localhost:3000/api/trails/post-trails`, dataTrails, {headers: {"x-access-token": user.token}} );
           
         request.then(() => {
-          setButtonAviability(true);
-          history.push(`/fineshed`) 
+          history.push(`/finished`) 
         });
     
 
@@ -102,7 +112,10 @@ export default function RegistrationTrail() {
   
 
   return (
+    <>
+    
     <ContainerBox>
+      <Header />
       <h1>Selecione Suas Trilhas</h1>
       <div className="boxOptions">
       {( page === 1 ) 
@@ -152,7 +165,7 @@ export default function RegistrationTrail() {
             ? <><button onClick = { () => backPage()}>  Anterior </button>
               <button onClick = { () => nextPage()}>Próximo > </button> </>
             : <><button onClick = { () => backPage()}>  Anterior </button>
-            <button onClick = { () => nextPage()} disabled = {!buttonAviability}> Finalizar </button> </>}
+            <button onClick = { () => nextPage()}> Finalizar </button> </>}
 
         </div>
         
@@ -164,21 +177,22 @@ export default function RegistrationTrail() {
       
 
     </ContainerBox>
+    </>
   );
   }
 
 const ContainerBox = styled.div `
     width: 100%;
     height: 100%;
-    padding-top: 3rem;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+
     align-items: center;
 
     h1 {
       font-size: 3rem;
       margin-bottom: 0.5rem;
+      margin-top: 2rem;
 
     }
 
