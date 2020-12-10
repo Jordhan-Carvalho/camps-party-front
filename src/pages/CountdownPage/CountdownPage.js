@@ -13,7 +13,7 @@ export default function CountdownPage() {
 
   useEffect(() => {
     axios
-      .get("https://camps-back.herokuapp.com/api/users/countdown")
+      .get(`${process.env.REACT_APP_BACKURL}/api/users/countdown`)
       .then(({ data }) => setDate(data.event));
   }, []);
 

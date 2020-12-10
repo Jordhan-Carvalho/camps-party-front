@@ -74,7 +74,7 @@ export default function RegistrationTrail() {
     const dataTrails = [dayOne, dayTwo, dayThree];
 
     const request = axios.post(
-      `https://camps-back.herokuapp.com/api/trails/post-trails`,
+      `${process.env.REACT_APP_BACKURL}/api/trails/post-trails`,
       dataTrails,
       { headers: { "x-access-token": user.token } }
     );

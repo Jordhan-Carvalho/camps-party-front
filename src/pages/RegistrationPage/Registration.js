@@ -17,8 +17,10 @@ export default function Registration() {
 
   useEffect(() => {
     const request = axios.get(
-      "https://camps-back.herokuapp.com/api/registration/ticket",
-      { headers: { "x-access-token": user.token } }
+      `${process.env.REACT_APP_BACKURL}/api/registration/ticket`,
+      {
+        headers: { "x-access-token": user.token },
+      }
     );
     request
       .then((response) => {
