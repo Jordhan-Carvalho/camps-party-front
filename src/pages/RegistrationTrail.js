@@ -153,12 +153,12 @@ export default function RegistrationTrail() {
             {page === 1 ? (
               <>
                 <div></div>
-                <button onClick={() => nextPage()}> Próximo > </button>
+                <button onClick={() => nextPage()}> Próximo </button>
               </>
             ) : page === 2 ? (
               <>
                 <button onClick={() => backPage()}> Anterior </button>
-                <button onClick={() => nextPage()}>Próximo > </button>{" "}
+                <button onClick={() => nextPage()}>Próximo </button>{" "}
               </>
             ) : (
               <>
