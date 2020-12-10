@@ -25,8 +25,6 @@ export default function RegistrationTrail() {
 
   const history = useHistory();
 
-  console.log(user.token);
-
   const listOptions = [
     { id: "Gaming", name: "Gaming" },
     { id: "Hacking", name: "Hacking" },
