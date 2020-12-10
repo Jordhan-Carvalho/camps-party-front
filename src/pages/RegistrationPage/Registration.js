@@ -63,4 +63,12 @@ const RegContainer = styled.div`
     font-size: 40px;
     margin: 30px 0;
   }
+
+  @media (max-width: 800px){
+    padding: 0 0 0 0;
+    h2{
+      font-size: 30px;
+      margin: 15px 0;
+    }    
+  }
 `;

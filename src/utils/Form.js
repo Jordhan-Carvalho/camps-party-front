@@ -63,6 +63,19 @@ const Form = styled.form`
       box-shadow: 0 0 4px #FFF;
       
     }
+
+  @media (max-width: 800px){
+    width: 90vw;
+    padding: 15px 10px;
+
+    h3{
+      font-size: 20px;
+    }
+
+    p{
+      font-size: 12px;
+    }
+  }
 `;
 
 export default Form;
