@@ -4,7 +4,6 @@ import axios from "axios";
 
 import Header from "../../components/Header";
 import PersonalData from "./PersonalData";
-import TicketData from "./TicketData";
 import HotelData from "./HotelData";
 import { userContext } from "../../contexts/UserContext";
 
@@ -13,7 +12,6 @@ export default function Registration() {
   const [isHotel, setIsHotel] = useState(false);
   const [page, setPage] = useState(1);
   const { user } = useContext(userContext);
-  console.log(personalData);
 
   useEffect(() => {
     const request = axios.get(
@@ -36,24 +34,19 @@ export default function Registration() {
     <>
       <Header />
       <RegContainer>
-        {page === 1 ? (
-          <PersonalData
-            personalData={personalData}
-            setPersonalData={serPersonalData}
-            setPage={setPage}
-            setIsHotel={setIsHotel}
-            isHotel={isHotel}
-          />
-        ) : null}
-        {isHotel && page === 2 ? (
-          <HotelData
-            personalData={personalData}
-            setPersonalData={serPersonalData}
-            setPage={setPage}
-            setIsHotel={setIsHotel}
-            isHotel={isHotel}
-          />
-        ) : null}
+          {
+            page === 1 ?
+            <PersonalData 
+              personalData={personalData} 
+              setPersonalData = {serPersonalData} 
+              setPage={setPage}  
+              isHotel = {isHotel} 
+            /> :
+            <HotelData 
+              personalData={personalData}  
+              setPage={setPage}  
+            />
+          }
       </RegContainer>
     </>
   );

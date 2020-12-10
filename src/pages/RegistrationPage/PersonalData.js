@@ -1,19 +1,48 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
 import Form from '../../utils/Form';
 import Button from '../../utils/Button';
 import {useForm, Controller} from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { userContext } from '../../contexts/UserContext';
 
-export default function PersonalData({personalData, setPersonalData, setPage, setIsHotel, isHotel}){
+export default function PersonalData({personalData, setPersonalData, setPage, isHotel}){
   const { register, handleSubmit, control, errors } = useForm();
+  const { user } = useContext(userContext);
   const history = useHistory();
+  const [disabled, setDisabled] = useState(false);
 
   const onSubmit = data => {
-    if(personalData && personalData.hasOwnProperty('hotel')){
-      const hotel = personalData.hotel;
-      setPersonalData({...data, hotel});
-    }else setPersonalData(data);
-    setPage(2);
+    setDisabled(true);
+    if(isHotel){
+      if(personalData && personalData.hasOwnProperty('hotel')){
+        const hotel = personalData.hotel;
+        setPersonalData({...data, hotel});
+      }else setPersonalData(data);
+      setPage(2);
+    }else{
+      setPersonalData(data);
+      sendPersonalData();
+    } 
+    
+  }
+
+  function sendPersonalData(){
+    const request = axios.post(
+      `${process.env.REACT_APP_BACKURL}/api/registration/create`, 
+      personalData,
+      {
+        headers: {"x-access-token": user.token}
+      }
+    );
+    request
+    .then(() =>{
+      history.push('/registration-trail');
+    })
+    .catch(error => {
+      alert(error.response);
+      setDisabled(false);
+    })
   }
 
   return(
@@ -69,7 +98,7 @@ export default function PersonalData({personalData, setPersonalData, setPage, se
            </select>
            {errors.gender && errors.gender.type === 'required' && <p>Preencha este campo!</p>}
            <div className= 'btn-container'>
-              <Button type='submit'>{isHotel ? 'Próximo' : 'Finalizar'}</Button>
+              <Button type='submit' disabled = {disabled}>{isHotel ? 'Próximo' : 'Finalizar'}</Button>
            </div>
         </Form>  
         </>
