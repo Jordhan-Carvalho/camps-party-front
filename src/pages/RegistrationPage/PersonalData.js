@@ -1,19 +1,37 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Form from '../../utils/Form';
 import Button from '../../utils/Button';
 import {useForm, Controller} from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { userContext } from '../../contexts/UserContext';
 
 export default function PersonalData({personalData, setPersonalData, setPage, setIsHotel, isHotel}){
   const { register, handleSubmit, control, errors } = useForm();
+  const { user } = useContext(userContext);
   const history = useHistory();
 
   const onSubmit = data => {
-    if(personalData && personalData.hasOwnProperty('hotel')){
-      const hotel = personalData.hotel;
-      setPersonalData({...data, hotel});
-    }else setPersonalData(data);
-    setPage(2);
+    if(isHotel){
+      if(personalData && personalData.hasOwnProperty('hotel')){
+        const hotel = personalData.hotel;
+        setPersonalData({...data, hotel});
+      }else setPersonalData(data);
+      setPage(2);
+    }else{
+      setPersonalData(data);
+      sendPersonalData();
+    } 
+    
+  }
+
+  function sendPersonalData(){
+    const request = axios.post('http://localhost:3000/api/registration/create', personalData,{headers: {"x-access-token": user.token}});
+    request.then(() =>{
+      history.push('/registration-trail');
+    }).catch(error => {
+      alert(error.response);
+    })
   }
 
   return(
