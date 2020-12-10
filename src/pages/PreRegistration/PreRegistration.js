@@ -46,7 +46,7 @@ export default function PreRegistration() {
     setInvalid(false);
     setLoading(true);
     axios
-      .post("https://camps-back.herokuapp.com/api/users/sign-up", preRegInfo)
+      .post(`${process.env.REACT_APP_BACKURL}/api/users/sign-up`, preRegInfo)
       .then(() => history.push("/pre-registration/success"))
       .catch((err) => console.error(err));
   };
