@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const Form = styled.form`
-    width: 40%;
+    width: 33vw;
     background: rgba(255, 255, 255, 0.24);
     display: flex;
     flex-direction: column;
@@ -22,7 +22,7 @@ const Form = styled.form`
     }
 
     input{
-      color: white;
+      color: white;      
     }
 
     input, select, label{
@@ -32,6 +32,7 @@ const Form = styled.form`
       border-left: none;
       border-right: none;
       border-bottom: 1px solid #9A9999;
+      border-radius:0.4rem;
       font-family: var(--formFont);
       padding: 5px;
       margin: 15px 0 5px 0;
@@ -44,6 +45,7 @@ const Form = styled.form`
     }
 
     .btn-container{
+      width:100%;
       display: flex;
       justify-content: ${props => props.value};
       margin: 20px 0 0 0;
