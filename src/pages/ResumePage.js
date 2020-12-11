@@ -16,6 +16,13 @@ export default function ResumePage() {
   const [page, setPage] = useState("1");
   const [userInfo, setUserInfo] = useState("");
 
+  const CPF = user.cpf;
+  const cpfMasked =
+    CPF.slice(0,3) + "."
+    + CPF.slice(3,6) + "."
+    + CPF.slice(6,9) + "-"
+    + CPF.slice(9,11)
+
   useEffect(() => {
     fetchFullReg();
   }, []);
@@ -75,18 +82,33 @@ export default function ResumePage() {
                   Seu Resumo
                 </h2>
                 <div>
-                  <span>Data do evento</span>
-                  <span>Endereço do evento</span>
+                  <span>Data: 21, 22, 23 de Janeiro</span>
+                  <span>Camps do Jordão</span>
                 </div>
                 <div>
                   <span>{userInfo.name}</span>
                   <span>{user.email}</span>
                   <span>{userInfo.phone}</span>
-                  <span>{user.cpf}</span>
+                  <span>{cpfMasked}</span>
                 </div>
                 <div>
-                  <span>Tipo de ingresso: {user.ticket}</span>
-                  <Button onClick={() => setChangeType(true)}>Mudar tipo de ingresso</Button>
+                  <span>Tipo de ingresso: {
+                    !changeType ? user.ticket : (
+                      <select required>
+                        <option value="" disabled hidden>Selecione seu ingresso</option>
+                        <option value="noAcommodation">Sem alojamento</option>
+                        <option value="camping">Camping</option>
+                        <option value="hotel">Hotel</option>
+                      </select>
+                    )
+                  }</span>
+                  {!changeType ? (
+                    <Button onClick={() => setChangeType(true)}>Mudar tipo de ingresso</Button>
+                  ) : (
+                    <Button onClick={() => setChangeType(false)}>Salvar ingresso</Button>
+                  )
+                  }
+                  
                 </div>
               </>
             ) : page === "2" ? (
@@ -156,13 +178,14 @@ const Info = styled.div`
   }
 
   & > div :first-child{
-    margin-top:3rem;
+    margin-top:2rem;
   }
 
   button{
     margin-top:1rem;
     width:15rem;
   }
+  
 `;
 
 const InfoContainer = styled.div`
@@ -221,8 +244,7 @@ const InfoWindow = styled.div`
   }
 `;
 
-const CustomLabel = styled(Label)`
-  margin-top:2rem;
+const CustomLabel = styled(Label)`  
   display:flex;
   flex-direction:column; 
 `;
