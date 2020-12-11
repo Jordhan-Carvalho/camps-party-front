@@ -94,6 +94,14 @@ const CustomForm = styled(Form)`
   h3 {
     margin: 1rem 0 2rem 0;
   }
+
+  @media (max-width: 800px){
+    width: 90vw;
+
+    input{
+      width: 95%;
+    }
+  }
 `;
 
 const CustomButton = styled(Button)`
