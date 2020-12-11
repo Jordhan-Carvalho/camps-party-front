@@ -23,7 +23,7 @@ export default function CountdownPage() {
       <div>
         <Logo src={logo} alt="campus party logo" />
         <div>
-          <StyledCountdown date={Date.now() + 3000} daysInHours={true}>
+          <StyledCountdown date={date} daysInHours={true}>
             <div className="link-container">
               <Link to="/pre-registration">
                 <GoToPage>
