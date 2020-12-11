@@ -123,7 +123,7 @@ const Header = styled.h1`
   flex-direction: column;
   text-align: center;
   width: 100%;
-  padding-top: 5rem;
+  padding-top: 4rem;
 
   span {
     width: 100%;
@@ -145,7 +145,7 @@ const Container = styled.div`
   height: auto;
   display: flex;
   justify-content: center;
-  padding-top: 5rem;
+  padding-top: 4rem;
 
   button {
     margin: 2rem 0;
