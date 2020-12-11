@@ -12,7 +12,9 @@ import { userContext } from "../contexts/UserContext";
 
 export default function ResumePage() {
   const { user } = useContext(userContext);
-  const [page, setPage] = useState("1"); 
+  const [changeType, setChangeType] = useState(false);
+  const [page, setPage] = useState("1");
+  const [userInfo, setUserInfo] = useState("");
 
   useEffect(() => {
     fetchFullReg();
@@ -26,6 +28,7 @@ export default function ResumePage() {
         `${process.env.REACT_APP_BACKURL}/api/users/${user.id}/complete-reg`,
         { headers: { "x-access-token": user.token } }
       );
+      setUserInfo(data)
       console.log("COMPLETE REG", data);
     } catch (e) {
       console.log(e);
@@ -76,13 +79,14 @@ export default function ResumePage() {
                   <span>Endereço do evento</span>
                 </div>
                 <div>
-                  <span>Nome</span>
-                  <span>Email</span>
-                  <span>CPF</span>
+                  <span>{userInfo.name}</span>
+                  <span>{user.email}</span>
+                  <span>{userInfo.phone}</span>
+                  <span>{user.cpf}</span>
                 </div>
                 <div>
-                  <span>Tipo de ingresso: </span>
-                  <Button>Mudar tipo de ingresso</Button>
+                  <span>Tipo de ingresso: {user.ticket}</span>
+                  <Button onClick={() => setChangeType(true)}>Mudar tipo de ingresso</Button>
                 </div>
               </>
             ) : page === "2" ? (
