@@ -4,10 +4,14 @@ import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { userContext } from "../contexts/UserContext";
 import Header from "../components/Header";
+import { FiSun } from "react-icons/fi";
+import { FiMoon } from "react-icons/fi";
+import { WiHorizonAlt } from "react-icons/wi";
 
 export default function RegistrationTrail() {
   const { user } = useContext(userContext);
   const [page, setPage] = useState(1);
+
   const [disabled, setDisabled] = useState(false);
   const [morning, setMorning] = useState("Gaming");
   const [afternoon, setAfternoon] = useState("Gaming");
@@ -22,6 +26,7 @@ export default function RegistrationTrail() {
       sendTrailsToDatabase();
     }
   }, [dayThree]);
+
 
   const history = useHistory();
 
@@ -84,11 +89,22 @@ export default function RegistrationTrail() {
     }
   }
 
+
+  function backPage(){
+    if (page >1){
+      setPage(page -1);
+
+    }
+
+  } 
+    
+
   function backPage() {
     if (page > 1) {
       setPage(page - 1);
     }
   }
+
 
   function sendTrailsToDatabase() {
     const dataTrails = [dayOne, dayTwo, dayThree];
@@ -106,6 +122,46 @@ export default function RegistrationTrail() {
 
   return (
     <>
+
+    
+    <ContainerBox>
+      <Header />
+      <h1>Selecione Suas Trilhas</h1>
+      <div className="boxOptions">
+      {( page === 1 ) 
+        ? <h3>Dia 1</h3>
+        : (page === 2) ? <h3>Dia 2</h3> : <h3>Dia 3</h3>}
+
+        <div className="slot">
+          <div className="coverMorning"> <FiSun /> </div>
+       
+          <select id="morning" className="select"  value={morning} onChange={e => setMorning(e.target.value)}>
+          {listOptions.map((item) => (
+            <option key={item.id} value={item.id}>{item.name}</option>
+          ))} 
+          </select>
+
+        </div>
+
+        <div className="slot">
+          <div className="coverAfternoon"> <WiHorizonAlt /> </div>
+
+          <select id="afternoon" className="select"  value={afternoon} onChange={e => setAfternoon(e.target.value)}>
+          {listOptions.map((item) => (
+            <option key={item.id} value={item.id}>{item.name}</option>
+          ))} 
+          </select>
+
+        </div>
+
+        <div className="slot">
+            <div className="coverNight"> <FiMoon /> </div>
+
+            <select id="night" className="select" value={night} onChange={e => setNight( e.target.value)}>
+             {listOptions.map((item) => (
+            <option key={item.id} value={item.id}>{item.name}</option>
+          ))} 
+
       <ContainerBox>
         <Header />
         <h1>Selecione Suas Trilhas</h1>
@@ -196,6 +252,7 @@ export default function RegistrationTrail() {
                   {item.name}
                 </option>
               ))}
+
             </select>
           </div>
 
@@ -298,6 +355,61 @@ const ContainerBox = styled.div`
       padding: 1rem;
       margin-top: 3rem;
 
+        .slot{
+          display: flex;
+          justify-content: flex-start;
+          align-items: center;
+          margin-bottom: 2rem;
+          margin-left: -6rem;
+
+          .coverMorning {
+            font-size: 3rem;
+            margin-right: 3rem;
+          }
+
+          .coverAfternoon {
+            font-size: 3rem;
+            margin-right: 3rem;
+
+            
+          }
+
+          .coverNight {
+            font-size: 3rem;
+            margin-right: 3rem;
+          }
+
+          .select{
+            width: 10rem;
+            height: 2rem;
+            
+          }
+
+        
+        }
+
+        .boxButtons {
+          width: 100%;
+          display: flex;
+          justify-content: space-between;
+          padding: 0.5rem 1rem;
+          margin-top: 1.5rem;
+          
+
+          button {
+            width: 10rem;
+            height: 2rem;
+            background: #A003A4;
+            color: #fff;
+            border-radius: 0.6rem;
+            border: none;
+            font-size: 1.5rem;
+
+
+          }
+          
+        }
+    
       button {
         width: 10rem;
         height: 2rem;
