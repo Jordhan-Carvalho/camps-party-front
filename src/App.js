@@ -11,6 +11,7 @@ import PreRegSuccess from "./pages/PreRegSuccess";
 import Registration from "./pages/RegistrationPage/Registration";
 import RegistrationTrail from "./pages/RegistrationTrail";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import ResumePage from "./pages/ResumePage";
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
           <Route path="/pre-registration/success" component={PreRegSuccess} />
           <Route path="/pre-registration" component={PreRegistration} />
           <Route path="/login" component={Login} />
+          <AuthenticatedRoute path="/resume" component={ResumePage} />
           <AuthenticatedRoute path="/registration" component={Registration} />
           <AuthenticatedRoute
             path="/registration-trail"
@@ -47,7 +49,7 @@ body {
 }
 
 #root {
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   background: var(--darkPurple);
 }

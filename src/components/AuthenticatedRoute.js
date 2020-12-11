@@ -8,7 +8,7 @@ export default function AuthenticatedRoute({ children, ...rest }) {
   const { user, setUser } = useContext(userContext);
 
   useEffect(() => {
-    verifyTokenExp();
+    if (user) verifyTokenExp();
   }, []);
 
   const verifyTokenExp = () => {

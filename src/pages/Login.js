@@ -9,6 +9,7 @@ import Header from "../components/Header";
 import { validateSignin } from "../utils/validationFuncs";
 import Spinner from "../components/Spinner";
 import { userContext } from "../contexts/UserContext";
+import { isEmpty } from "../utils/helperFunctions";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -23,14 +24,25 @@ export default function Login() {
     try {
       validateSignin(email, password);
       const { data } = await axios.post(
-        "http://localhost:3000/api/users/sign-in",
+        `${process.env.REACT_APP_BACKURL}/api/users/sign-in`,
         {
           email,
           password,
         }
       );
-      setUser({ id: data.id, cpf: data.cpf, token: data.token });
+      setUser({
+        id: data.id,
+        cpf: data.cpf,
+        token: data.token,
+        email: data.email,
+        ticket: data.ticket,
+      });
       setIsLoading(false);
+      const res = await axios.get(
+        `${process.env.REACT_APP_BACKURL}/api/users/${data.id}/complete-reg`,
+        { headers: { "x-access-token": data.token } }
+      );
+      if (!isEmpty(res.data)) return history.push("/resume");
       history.push("/registration");
     } catch (e) {
       alert(e.message);
@@ -80,8 +92,16 @@ const CustomForm = styled(Form)`
   input {
     width: 80%;
   }
-  h3{
-    margin:1rem 0 2rem 0;
+  h3 {
+    margin: 1rem 0 2rem 0;
+  }
+
+  @media (max-width: 800px) {
+    width: 90vw;
+
+    input {
+      width: 95%;
+    }
   }
 `;
 
