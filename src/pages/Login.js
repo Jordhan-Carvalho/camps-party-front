@@ -34,6 +34,7 @@ export default function Login() {
         id: data.id,
         cpf: data.cpf,
         token: data.token,
+        email: data.email,
         ticket: data.ticket,
       });
       setIsLoading(false);
@@ -95,10 +96,10 @@ const CustomForm = styled(Form)`
     margin: 1rem 0 2rem 0;
   }
 
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     width: 90vw;
 
-    input{
+    input {
       width: 95%;
     }
   }
