@@ -49,26 +49,26 @@ export default function CountdownPage() {
 }
 
 const Planet = styled.img`
-  margin-top: 5rem;
+  width: 50%;
   @media (max-width: 800px){
-    width: 82vw;
-    margin: 0 auto;
+    width: 80vw;
+    margin: -1rem auto;
   }
 `;
 
 const Logo = styled.img`
   width: auto;
   height: 14rem;
-  margin-bottom: 3rem;
+  margin-bottom: 2rem;
   @media (max-width: 800px){
     width: 4rem;
     height: 4.5rem;
-    margin: -1rem 0 1rem 0;
+    margin: -1.5rem 0 1rem 0;
   }
 `;
 
 const StyledCountdown = styled(Countdown)`
-  font-size: 8rem;
+  font-size: 6.5rem;
   @media (max-width: 800px){
     font-size: 2rem;
   }
@@ -76,20 +76,22 @@ const StyledCountdown = styled(Countdown)`
 
 const Container = styled.div`
   display: flex;
+  align-items: center;
   width: 100%;
+  height: 100vh;
 
   & > div {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    width: 100%;
+    width: 50%;
 
     > div {
       display: flex;
       justify-content: center;
       align-items: center;
-      width: 42rem;
+      width: 75%;
       padding: 2rem;
       border-radius: 2rem;
       background-color: rgb(255, 255, 255, 0.24);
@@ -102,9 +104,15 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    width: 90%;
+
+    a{
+      width: 100%;
+    }
 
     button {
       margin: 1rem;
+      width: 90%;
     }
     .to-login {
       font-size: 1rem;
@@ -113,8 +121,8 @@ const Container = styled.div`
 
   @media (max-width: 800px){
     flex-wrap: wrap;
-
     & > div{
+      width: 100%;
       > div{
         width: 85vw;
         padding: 1em;

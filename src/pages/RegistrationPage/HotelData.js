@@ -48,7 +48,7 @@ export default function HotelData({personalData, setPage}){
             setHotel('La Residence Paulista')
           }}>
             <div></div>
-            <p>La Residence Paulista - R$1000,00</p>
+            <p>La Residence Paulista</p>
           </Label>
           <input type='radio' id='danInn' name="option" value='danInn'
           defaultChecked={personalData && personalData.hotel && personalData.hotel === 'Dan Inn Planalto São Paulo'} 
@@ -57,7 +57,7 @@ export default function HotelData({personalData, setPage}){
             setHotel('Dan Inn Planalto São Paulo')
           }}>
             <div></div>
-            <p>Dan Inn Planalto São Paulo - R$1200,00</p>
+            <p>Dan Inn Planalto São Paulo</p>
           </Label>
           <input type='radio' id='intercity' name="option" value='intercity'
           defaultChecked={personalData && personalData.hotel && personalData.hotel === 'Intercity São Paulo Ibirapuera'} 
@@ -66,7 +66,7 @@ export default function HotelData({personalData, setPage}){
             setHotel('Intercity São Paulo Ibirapuera')
           }}>
             <div></div>
-            <p>Intercity São Paulo Ibirapuera - R$1300,00 </p>
+            <p>Intercity São Paulo Ibirapuera</p>
           </Label>
           <input type='radio' id='blue' name="option" value='blue'
           defaultChecked={personalData && personalData.hotel && personalData.hotel === 'Blue Tree Premium'} 
@@ -75,7 +75,7 @@ export default function HotelData({personalData, setPage}){
             setHotel('Blue Tree Premium')
           }}>
             <div></div>
-            <p>Blue Tree Premium - R$1450,00</p>
+            <p>Blue Tree Premium</p>
           </Label>
           <input type='radio' id='quality' name="option" value='quality'
           defaultChecked={personalData && personalData.hotel && personalData.hotel === 'Quality Faria Lima'} 
@@ -84,7 +84,7 @@ export default function HotelData({personalData, setPage}){
             setHotel('Quality Faria Lima');
           }}>
             <div></div>
-            <p>Quality Faria Lima - R$1600,00</p>
+            <p>Quality Faria Lima</p>
           </Label>
           <p>* Ingresso incluso</p>
           <div className= 'btn-container'>
