@@ -31,6 +31,17 @@ const Label = styled.label`
       font-size: 1em;
       color: white;
    }
+
+   @media (max-width: 800px){
+      div{
+         width: 1.8em;
+         height: 1.8em;
+      }
+
+      p{
+         font-size: 12px;
+      }
+  }
 `;
 
 export default Label;

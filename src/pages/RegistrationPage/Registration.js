@@ -56,11 +56,19 @@ const RegContainer = styled.div`
   width: 100vw;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  padding: 5% 0 0 0;
 
   h2 {
     font-size: 40px;
     margin: 30px 0;
+  }
+
+  @media (max-width: 800px){
+    padding: 0 0 0 0;
+    h2{
+      font-size: 30px;
+      margin: 15px 0;
+    }    
   }
 `;

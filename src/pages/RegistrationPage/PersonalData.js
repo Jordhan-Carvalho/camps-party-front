@@ -21,16 +21,15 @@ export default function PersonalData({personalData, setPersonalData, setPage, is
       }else setPersonalData(data);
       setPage(2);
     }else{
-      setPersonalData(data);
-      sendPersonalData();
+      sendPersonalData(data);
     } 
     
   }
 
-  function sendPersonalData(){
+  function sendPersonalData(data){
     const request = axios.post(
       `${process.env.REACT_APP_BACKURL}/api/registration/create`, 
-      personalData,
+      data,
       {
         headers: {"x-access-token": user.token}
       }
