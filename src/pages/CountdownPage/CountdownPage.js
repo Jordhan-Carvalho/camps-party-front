@@ -61,8 +61,8 @@ const Logo = styled.img`
   height: 14rem;
   margin-bottom: 3rem;
   @media (max-width: 800px){
-    width: 3rem;
-    height: 4rem;
+    width: 4rem;
+    height: 4.5rem;
     margin: -1rem 0 1rem 0;
   }
 `;
