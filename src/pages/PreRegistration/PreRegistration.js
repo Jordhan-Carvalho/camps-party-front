@@ -42,7 +42,7 @@ export default function PreRegistration() {
   const sendForm = (e) => {
     e.preventDefault();
     setPersistTicketForm(true);
-    if (!ticket) return setInvalid("Nenhum hotel selecionado!");
+    if (!ticket) return setInvalid("Nenhum ingresso selecionado!");
     setInvalid(false);
     setLoading(true);
     axios
@@ -130,6 +130,14 @@ const Header = styled.h1`
     text-align: center;
     font-size: 5rem;
   }
+
+  @media (max-width: 800px){
+    padding-top: 2rem;
+
+    span{
+      font-size: 2rem;
+    }
+  }
 `;
 
 const Container = styled.div`
@@ -154,5 +162,9 @@ const Container = styled.div`
   .invalid {
     width: 100%;
     text-align: center;
+  }
+
+  @media (max-width: 800px){
+    padding-top: 2rem;
   }
 `;

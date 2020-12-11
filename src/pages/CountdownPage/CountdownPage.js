@@ -50,16 +50,28 @@ export default function CountdownPage() {
 
 const Planet = styled.img`
   margin-top: 5rem;
+  @media (max-width: 800px){
+    width: 82vw;
+    margin: 0 auto;
+  }
 `;
 
 const Logo = styled.img`
   width: auto;
   height: 14rem;
   margin-bottom: 3rem;
+  @media (max-width: 800px){
+    width: 3rem;
+    height: 4rem;
+    margin: -1rem 0 1rem 0;
+  }
 `;
 
 const StyledCountdown = styled(Countdown)`
   font-size: 8rem;
+  @media (max-width: 800px){
+    font-size: 2rem;
+  }
 `;
 
 const Container = styled.div`
@@ -82,6 +94,7 @@ const Container = styled.div`
       border-radius: 2rem;
       background-color: rgb(255, 255, 255, 0.24);
     }
+    
   }
 
   .link-container {
@@ -95,6 +108,32 @@ const Container = styled.div`
     }
     .to-login {
       font-size: 1rem;
+    }
+  }
+
+  @media (max-width: 800px){
+    flex-wrap: wrap;
+
+    & > div{
+      > div{
+        width: 85vw;
+        padding: 1em;
+      }
+    }
+
+    .link-container{
+      .to-login{
+        font-size: 0.8rem;
+      }
+
+      button{
+        margin: 0.5rem 0 0.5rem 0;
+        width: 100%;
+      }
+
+      a{
+        width: 100%;
+      }
     }
   }
 `;
@@ -121,5 +160,13 @@ const GoToPage = styled.button`
     width: 100%;
     text-align: center;
     font-size: 1.5rem;
+  }
+  @media (max-width: 800px){
+    width: 95%;
+
+    & > span{
+      font-size: 0.8rem;
+      padding: 0;
+    }
   }
 `;
