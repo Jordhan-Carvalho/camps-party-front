@@ -5,6 +5,7 @@ import {useForm, Controller} from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { userContext } from '../../contexts/UserContext';
+import InputMask from "react-input-mask";
 
 export default function PersonalData({personalData, setPersonalData, setPage, isHotel}){
   const { register, handleSubmit, control, errors } = useForm();
@@ -76,15 +77,12 @@ export default function PersonalData({personalData, setPersonalData, setPage, is
             {errors.address && errors.address.type === 'required' && <p>Preencha este campo!</p>}
             {errors.address && errors.address.type === 'minLength' && <p>Entrada inválida!</p>}
             <Controller 
-              as={<input />}
+              as={InputMask}
               control={control}
               name='phone' 
               placeholder="Fone"
               defaultValue={personalData ? personalData.phone : ""} 
-              rules = {{
-                required: true,
-                minLength: 8,
-              }}
+              mask = "(99) 99999-9999"
             />
             {errors.phone && errors.phone.type === 'required' && <p>Preencha este campo!</p>}
             {errors.phone && errors.phone.type === 'minLength' && <p>Entrada inválida!</p>}
