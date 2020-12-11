@@ -10,6 +10,7 @@ border-radius: 10px;
 border: none;
 outline: none;
 cursor: pointer;
+box-shadow: 3px 5px 10px 0px rgba(0, 0, 0, 0.45);
 `;
 
 export default Button;

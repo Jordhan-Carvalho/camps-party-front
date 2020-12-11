@@ -25,7 +25,7 @@ export default function HotelData({personalData, setPage}){
       );
       request
       .then(() =>{
-        history.push('/registration-trail');
+        history.push('/pre-registration/success');
       })
       .catch(error => {
         alert(error.response);
