@@ -4,6 +4,9 @@ import styled from "styled-components";
 import { useHistory } from 'react-router-dom';
 import { userContext } from "../contexts/UserContext";
 import Header from "../components/Header";
+import { FiSun } from "react-icons/fi";
+import { FiMoon } from "react-icons/fi";
+import { WiHorizonAlt } from "react-icons/wi";
 
 export default function RegistrationTrail() {
 
@@ -19,6 +22,13 @@ export default function RegistrationTrail() {
   const [dayTwo, setDayTwo] = useState('');
   const [dayThree, setDayThree] = useState('');
   
+  const [listOptions, setListOptions] = useState([
+    {id: 'Gaming',   name: 'Gaming'},
+    {id: 'Hacking',  name: 'Hacking'},
+    {id:'Makers',    name: 'Makers'},
+    {id: 'Startups', name: 'Startups'},
+  ])
+
   useEffect( () => { 
     if (dayThree !== ''){
       sendTrailsToDatabase()
@@ -27,16 +37,6 @@ export default function RegistrationTrail() {
   
   const history = useHistory();
 
-  console.log(user.token);
-
-  const listOptions = [
-    {id: 'Gaming', name: 'Gaming'},
-    {id: 'Hacking', name: 'Hacking'},
-    {id:'Makers', name: 'Makers'},
-    {id: 'Startups', name: 'Startups'}
-  ];
-
-  
 
   function nextPage(){
     
@@ -84,8 +84,6 @@ export default function RegistrationTrail() {
     
   }
 
- 
-
   function backPage(){
     if (page >1){
       setPage(page -1);
@@ -94,8 +92,6 @@ export default function RegistrationTrail() {
 
   } 
     
-
-
   function sendTrailsToDatabase() {
 
     const dataTrails = [dayOne, dayTwo, dayThree];
@@ -123,8 +119,8 @@ export default function RegistrationTrail() {
         : (page === 2) ? <h3>Dia 2</h3> : <h3>Dia 3</h3>}
 
         <div className="slot">
-          <div className="coverMorning"></div>
-
+          <div className="coverMorning"> <FiSun /> </div>
+       
           <select id="morning" className="select"  value={morning} onChange={e => setMorning(e.target.value)}>
           {listOptions.map((item) => (
             <option key={item.id} value={item.id}>{item.name}</option>
@@ -134,22 +130,22 @@ export default function RegistrationTrail() {
         </div>
 
         <div className="slot">
-          <div className="coverAfternoon"></div>
+          <div className="coverAfternoon"> <WiHorizonAlt /> </div>
 
           <select id="afternoon" className="select"  value={afternoon} onChange={e => setAfternoon(e.target.value)}>
           {listOptions.map((item) => (
-            <option key={item.id} value={item.id} selected>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
           ))} 
           </select>
 
         </div>
 
         <div className="slot">
-            <div className="coverNight"></div>
+            <div className="coverNight"> <FiMoon /> </div>
 
             <select id="night" className="select" value={night} onChange={e => setNight( e.target.value)}>
              {listOptions.map((item) => (
-            <option key={item.id} value={item.id} selected>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
           ))} 
             </select>
 
@@ -222,27 +218,20 @@ const ContainerBox = styled.div `
           margin-left: -6rem;
 
           .coverMorning {
-            width: 3rem; 
-            height: 3rem;
-            border-radius: 50%;
-            background: #fde910;
-            margin-right: 2rem;
+            font-size: 3rem;
+            margin-right: 3rem;
           }
 
           .coverAfternoon {
-            width: 3rem; 
-            height: 3rem;
-            border-radius: 50%;
-            background: #ff8347;
-            margin-right: 2rem;
+            font-size: 3rem;
+            margin-right: 3rem;
+
+            
           }
 
           .coverNight {
-            width: 3rem; 
-            height: 3rem;
-            border-radius: 50%;
-            background: #0e0872;
-            margin-right: 2rem;
+            font-size: 3rem;
+            margin-right: 3rem;
           }
 
           .select{
@@ -258,8 +247,9 @@ const ContainerBox = styled.div `
           width: 100%;
           display: flex;
           justify-content: space-between;
-          padding: 1rem;
-          margin-top: 3rem;
+          padding: 0.5rem 1rem;
+          margin-top: 1.5rem;
+          
 
           button {
             width: 10rem;
