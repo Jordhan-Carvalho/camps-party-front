@@ -3,12 +3,15 @@ import axios from "axios";
 import styled from "styled-components";
 import { useHistory } from "react-router-dom";
 import { userContext } from "../contexts/UserContext";
+import { FiSun } from 'react-icons/fi';
+import { FiMoon } from 'react-icons/fi';
+import { WiHorizonAlt } from 'react-icons/wi';
+
 import Header from "../components/Header";
 
 export default function RegistrationTrail() {
   const { user } = useContext(userContext);
   const [page, setPage] = useState(1);
-  const [disabled, setDisabled] = useState(false);
   const [morning, setMorning] = useState("Gaming");
   const [afternoon, setAfternoon] = useState("Gaming");
   const [night, setNight] = useState("Gaming");
@@ -119,7 +122,7 @@ export default function RegistrationTrail() {
           )}
 
           <div className="slot">
-            <div className="coverMorning"></div>
+            <FiSun />
 
             <select
               id="morning"
@@ -146,7 +149,7 @@ export default function RegistrationTrail() {
           </div>
 
           <div className="slot">
-            <div className="coverAfternoon"></div>
+            <WiHorizonAlt/>
 
             <select
               id="afternoon"
@@ -173,7 +176,7 @@ export default function RegistrationTrail() {
           </div>
 
           <div className="slot">
-            <div className="coverNight"></div>
+            <FiMoon/>
 
             <select
               id="night"
@@ -224,35 +227,31 @@ export default function RegistrationTrail() {
 }
 
 const ContainerBox = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
-
   align-items: center;
 
   h1 {
     font-size: 3rem;
-    margin-bottom: 0.5rem;
-    margin-top: 2rem;
+    margin: 2rem 0;
   }
 
   h3 {
     font-size: 2.25rem;
-    margin-bottom: 3rem;
-    margin-top: 2rem;
+    margin: 0 0 20px 0;
   }
 
   .boxOptions {
     background: rgb(0, 0, 0, 24%);
     width: 25rem;
-    height: 30rem;
     border-radius: 2rem;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    margin-top: 3rem;
+    padding: 20px;
 
     .slot {
       display: flex;
@@ -261,33 +260,23 @@ const ContainerBox = styled.div`
       margin-bottom: 2rem;
       margin-left: -6rem;
 
-      .coverMorning {
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        background: #fde910;
-        margin-right: 2rem;
-      }
-
-      .coverAfternoon {
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        background: #ff8347;
-        margin-right: 2rem;
-      }
-
-      .coverNight {
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        background: #0e0872;
-        margin-right: 2rem;
+      svg{
+        font-size: 3rem;
+        margin-right: 1rem;
       }
 
       .select {
         width: 10rem;
-        height: 2rem;
+        height: 1.5rem;
+        background: transparent;
+        outline: none;
+        border-top: none;
+        border-left: none;
+        border-right: none;
+        border-bottom: 1px solid #9A9999;
+        border-radius:0.4rem;
+        font-family: var(--formFont);
+        color: #9A9999;
       }
     }
 
@@ -296,33 +285,37 @@ const ContainerBox = styled.div`
       display: flex;
       justify-content: space-between;
       padding: 1rem;
-      margin-top: 3rem;
+      margin-top: 1rem;
 
       button {
-        width: 10rem;
+        width: 8rem;
         height: 2rem;
         background: #a003a4;
         color: #fff;
         border-radius: 0.6rem;
         border: none;
         font-size: 1.5rem;
+        outline: none;
+        cursor: pointer;;
       }
     }
   }
 
   @media (max-width: 800px) {
+    width: 100vw;
     h1 {
       font-size: 2rem;
+      margin: 0;
+      padding: 20px 0;
+      text-align: center;
     }
 
     h3 {
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
     }
 
     .boxOptions {
-      width: 20rem;
-      height: 25rem;
-      margin-top: 2rem;
+      width: 90%;
 
       .slot {
         justify-content: center;
@@ -331,11 +324,12 @@ const ContainerBox = styled.div`
       }
 
       .boxButtons {
-        margin-top: 1.5rem;
+        margin-top: 1rem;
 
         button {
-          width: 8rem;
+          width: 6rem;
           height: 2rem;
+          font-size: 1rem;
         }
       }
     }
