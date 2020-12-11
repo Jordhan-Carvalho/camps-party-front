@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import axios from "axios";
+import styled from "styled-components";
+import { useHistory } from "react-router-dom";
+
 import TicketSelection from "./TicketSelection";
 import Form from "../../utils/Form";
 import Button from "../../utils/Button";
-import styled from "styled-components";
-import { useHistory } from "react-router-dom";
+import { cpfMask } from "../../utils/masks";
 
 export default function PreRegistration() {
   const [email, setEmail] = useState("");
@@ -27,13 +29,7 @@ export default function PreRegistration() {
     ticket,
   };
 
-  const limitMaxLength = (element) => {
-    if (element.target.value.length > 11) return;
-    setCpf(element.target.value);
-  };
-
   const nextForm = () => {
-    if (cpf.length < 11) return setInvalid("CPF inválido!");
     if (pwd !== pwdConfirm) return setInvalid("As senhas não são idênticas!");
     setInvalid(false);
     setChooseTicket(true);
@@ -69,10 +65,10 @@ export default function PreRegistration() {
                 required
               />
               <input
-                type="number"
+                type="text"
                 placeholder="CPF"
-                value={cpf}
-                onChange={limitMaxLength}
+                value={cpfMask(cpf)}
+                onChange={(e) => setCpf(e.target.value)}
                 required
               />
               <input
@@ -131,10 +127,10 @@ const Header = styled.h1`
     font-size: 5rem;
   }
 
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     padding-top: 2rem;
 
-    span{
+    span {
       font-size: 2rem;
     }
   }
@@ -164,7 +160,7 @@ const Container = styled.div`
     text-align: center;
   }
 
-  @media (max-width: 800px){
+  @media (max-width: 800px) {
     padding-top: 2rem;
   }
 `;
