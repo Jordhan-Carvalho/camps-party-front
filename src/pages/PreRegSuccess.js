@@ -29,13 +29,13 @@ const Header = styled.h1`
   flex-direction: column;
   text-align: center;
   width: 100%;
-  padding-top: 5rem;
+  padding-top: 3.5rem;
 
   span {
     width: 100%;
     text-align: center;
-    font-size: 3.5rem;
-    margin:0.5rem;
+    font-size: 3rem;
+    padding:0.5rem;
   }
 
   @media (max-width: 800px){
@@ -85,6 +85,7 @@ const BtnContainer = styled.div`
 `;
 
 const TrimmedPlanet = styled.img`
+  width: 40%;
   position:fixed;
   bottom:0;
   right:0;
