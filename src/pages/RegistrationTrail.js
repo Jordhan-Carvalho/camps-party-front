@@ -8,7 +8,7 @@ import Header from "../components/Header";
 export default function RegistrationTrail() {
   const { user } = useContext(userContext);
   const [page, setPage] = useState(1);
-
+  const [disabled, setDisabled] = useState(false);
   const [morning, setMorning] = useState("Gaming");
   const [afternoon, setAfternoon] = useState("Gaming");
   const [night, setNight] = useState("Gaming");
@@ -35,7 +35,7 @@ export default function RegistrationTrail() {
   function nextPage() {
     if (page === 1) {
       setDayOne({
-        dayOne: { morning: morning, afternoon: afternoon, night: night },
+        dayOne: { morning, afternoon, night },
       });
 
       setMorning("Gaming");
@@ -45,9 +45,20 @@ export default function RegistrationTrail() {
     }
 
     if (page === 2) {
+      const day2trails = [morning, afternoon, night];
+
+      if (
+        day2trails.some((t) => t === "Hacking") &&
+        !day2trails.every((t) => t === "Hacking")
+      ) {
+        alert(
+          "Neste dia, Hacking será um workshop e quem escolher, deve selecionar esta opção em todos os horários!"
+        );
+        return;
+      }
       setPage(page + 1);
       setDayTwo({
-        dayTwo: { morning: morning, afternoon: afternoon, night: night },
+        dayTwo: { morning, afternoon, night },
       });
 
       setMorning("Gaming");
@@ -56,6 +67,17 @@ export default function RegistrationTrail() {
     }
 
     if (page === 3) {
+      const day3trails = [morning, afternoon, night];
+
+      if (
+        day3trails.some((t) => t === "Gaming") &&
+        !day3trails.every((t) => t === "Gaming")
+      ) {
+        alert(
+          "Neste dia, Gaming será um campeonato e quem escolher, deve selecionar esta opção em todos os horários!"
+        );
+        return;
+      }
       setDayThree({
         dayThree: { morning: morning, afternoon: afternoon, night: night },
       });
@@ -103,7 +125,17 @@ export default function RegistrationTrail() {
               id="morning"
               className="select"
               value={morning}
-              onChange={(e) => setMorning(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value === "Hacking" && page === 2) {
+                  setAfternoon("Hacking");
+                  setNight("Hacking");
+                }
+                if (e.target.value === "Gaming" && page === 3) {
+                  setAfternoon("Gaming");
+                  setNight("Gaming");
+                }
+                setMorning(e.target.value);
+              }}
             >
               {listOptions.map((item) => (
                 <option key={item.id} value={item.id}>
@@ -120,7 +152,17 @@ export default function RegistrationTrail() {
               id="afternoon"
               className="select"
               value={afternoon}
-              onChange={(e) => setAfternoon(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value === "Hacking" && page === 2) {
+                  setMorning("Hacking");
+                  setNight("Hacking");
+                }
+                if (e.target.value === "Gaming" && page === 3) {
+                  setMorning("Gaming");
+                  setNight("Gaming");
+                }
+                setAfternoon(e.target.value);
+              }}
             >
               {listOptions.map((item) => (
                 <option key={item.id} value={item.id} selected>
@@ -137,7 +179,17 @@ export default function RegistrationTrail() {
               id="night"
               className="select"
               value={night}
-              onChange={(e) => setNight(e.target.value)}
+              onChange={(e) => {
+                if (e.target.value === "Hacking" && page === 2) {
+                  setMorning("Hacking");
+                  setAfternoon("Hacking");
+                }
+                if (e.target.value === "Gaming" && page === 3) {
+                  setMorning("Gaming");
+                  setAfternoon("Gaming");
+                }
+                setNight(e.target.value);
+              }}
             >
               {listOptions.map((item) => (
                 <option key={item.id} value={item.id} selected>
