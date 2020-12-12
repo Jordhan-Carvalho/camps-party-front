@@ -88,10 +88,10 @@ export default function PersonalData({personalData, setPersonalData, setPage, is
             {errors.phone && errors.phone.type === 'minLength' && <p>Entrada inválida!</p>}
            <select name='gender' ref={register({ required: true })}>
               <option value="">Gênero</option>
-              <option value="female">Feminino</option>
-              <option value="male">Masculino</option>
-              <option value="others">Outros</option>
-              <option value="ratherNotSay">Prefiro não informar</option>
+              <option value="Feminino">Feminino</option>
+              <option value="Masculino">Masculino</option>
+              <option value="Outros">Outros</option>
+              <option value="Prefiro não informar">Prefiro não informar</option>
            </select>
            {errors.gender && errors.gender.type === 'required' && <p>Preencha este campo!</p>}
            <div className= 'btn-container'>

@@ -1,9 +1,10 @@
 import React from "react";
 import styled from 'styled-components';
-
+import { Link } from "react-router-dom";
 import logo from '../assets/logo.png';
 import mundoCortado from '../assets/mundoCortado.png';
 import mundo from '../assets/mundo.png';
+import Button from '../utils/Button';
 
 
 
@@ -15,15 +16,18 @@ export default function Finished() {
       <ContainerBox> 
         
         <h1>Parabéns!<br /> Seu cadastro foi finalizado com sucesso!</h1>
-        <><img className="mundao" src={mundo} /> </>
-        <div className="images">
-          
-          <><img src={logo} /> </>
-          <><img src={mundoCortado} /> </>
-          
-          
 
-          
+        <Link to="/login">
+          <Button>
+            Fazer Login
+          </Button>
+        </Link>
+
+        <><img className="mundao" src={mundo} alt="camps party planet"/></>
+
+        <div className="images">
+          <><img src={logo} alt="camps party"/> </>
+          <><img src={mundoCortado} alt="camps party planet"/> </>
         </div>
         
       </ContainerBox>
