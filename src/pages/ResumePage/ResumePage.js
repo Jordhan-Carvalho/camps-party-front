@@ -6,7 +6,7 @@ import Header from "../../components/Header";
 import SideMenu from "./SideMenu";
 import OverviewPage from "./OverviewPage";
 import HotelPage from "./HotelPage";
-import ActivitiesPage from "./ActivitiesPage";
+import ActivitiesPage from "./ActivitiesPage/ActivitiesPage";
 
 import { userContext } from "../../contexts/UserContext";
 
@@ -74,7 +74,7 @@ export default function ResumePage() {
 
             ) : userInfo ? (
 
-              <ActivitiesPage />
+              <ActivitiesPage value={{user}}/>
 
             ) : ("")}
           </Info>
@@ -123,6 +123,9 @@ const Info = styled.div`
   }
   
   h2{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     width:100%;
     padding-left:4rem;
     padding-top:2rem;
