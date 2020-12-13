@@ -1,4 +1,5 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from "axios";
 import Label from "../../utils/Label"
 import Form from "../../utils/Form";
 import Button from "../../utils/Button";
@@ -6,8 +7,35 @@ import styled from 'styled-components';
 
 export default function HotelPage({value}) {
     let {user} = value;
-    const [hotel, setHotel] = useState("La Residence Paulista");
-    const [changeHotel, setChangeHotel] = useState(false);    
+    const [hotel, setHotel] = useState("");
+    const [changeHotel, setChangeHotel] = useState(false);
+    const [disableBtn, setDisableBtn] = useState(false);
+    
+    const fetchHotel = () => {
+        axios.get(
+            `${process.env.REACT_APP_BACKURL}/api/registration/hotel`,
+            { headers: { "x-access-token": user.token } }
+          ).then(({data}) => {            
+            setHotel(data.hotel)
+          })
+          .catch((err) => console.log(err))        
+      };
+    
+      useEffect(() => fetchHotel(),[]);
+
+    const updateHotel = () => {
+        setDisableBtn(true);
+        setChangeHotel(false);
+        axios.post(
+            `${process.env.REACT_APP_BACKURL}/api/registration/hotel`,
+            { hotel },
+            { headers: { "x-access-token": user.token } }
+        ).then(({data}) => {
+            setHotel(data.hotel);
+            setDisableBtn(false);
+        })
+        .catch((err) => console.log(err))
+    };
 
     return (
         <>
@@ -43,40 +71,82 @@ export default function HotelPage({value}) {
                 <>
                     <div className="infoDiv">                        
                         <CustomHotelForm disabled={!changeHotel} required id="change-hotel" onSubmit={(e) => e.preventDefault()}>
-                            <input disabled={!changeHotel} type='radio' id='laResidence' defaultChecked name="option" value='La Residence Paulista'/>
+                            <input 
+                            disabled={!changeHotel} 
+                            type='radio' 
+                            id='laResidence' 
+                            checked = {hotel === "La Residence Paulista"}
+                            onChange = {(e) => setHotel(e.target.value)}
+                            name="option" 
+                            value='La Residence Paulista'/>
                             <Label htmlFor='laResidence'>
                                 <div></div>
                                 <p>La Residence Paulista</p>
                             </Label>
-                            <input disabled={!changeHotel} type='radio' id='danInn' name="option" value='Dan Inn Planalto São Paulo'/>
+
+                            <input 
+                            disabled={!changeHotel} 
+                            type='radio' 
+                            id='danInn'
+                            checked = {hotel === "Dan Inn Planalto São Paulo"}
+                            onChange = {(e) => setHotel(e.target.value)} 
+                            name="option" 
+                            value='Dan Inn Planalto São Paulo'/>
                             <Label htmlFor='danInn'>
                                 <div></div>
                                 <p>Dan Inn Planalto São Paulo</p>
                             </Label>
-                            <input disabled={!changeHotel} type='radio' id='intercity' name="option" value='Intercity São Paulo Ibirapuera'/>
+
+                            <input 
+                            disabled={!changeHotel} 
+                            type='radio' 
+                            id='intercity'
+                            checked = {hotel === "Intercity São Paulo Ibirapuera"}
+                            onChange = {(e) => setHotel(e.target.value)} 
+                            name="option" 
+                            value='Intercity São Paulo Ibirapuera'/>
                             <Label htmlFor='intercity'>
                                 <div></div>
                                 <p>Intercity São Paulo Ibirapuera</p>
                             </Label>
-                            <input disabled={!changeHotel} type='radio' id='blue' name="option" value='Blue Tree Premium'/>
+
+                            <input 
+                            disabled={!changeHotel} 
+                            type='radio' 
+                            id='blue'
+                            checked = {hotel === "Blue Tree Premium"}
+                            onChange = {(e) => setHotel(e.target.value)} 
+                            name="option" 
+                            value='Blue Tree Premium'/>
                             <Label htmlFor='blue'>
                                 <div></div>
                                 <p>Blue Tree Premium</p>
                             </Label>
-                            <input disabled={!changeHotel} type='radio' id='quality' name="option" value='Quality Faria Lima'/>
+
+                            <input 
+                            disabled={!changeHotel} 
+                            type='radio' 
+                            id='quality'
+                            checked = {hotel === "Quality Faria Lima"}
+                            onChange = {(e) => setHotel(e.target.value)} 
+                            name="option" 
+                            value='Quality Faria Lima'/>
                             <Label htmlFor='quality'>
                                 <div></div>
                                 <p>Quality Faria Lima</p>
-                            </Label>                            
+                            </Label>
+
                         </CustomHotelForm>
-                        {changeHotel ? (
-                            <SaveHotel type="submit" form="change-hotel" onClick={() => setChangeHotel(false)}>
+                        {changeHotel && !disableBtn ? (
+                            <SaveHotel type="submit" form="change-hotel" onClick={() => updateHotel()}>
                                 Salvar Hotel
                             </SaveHotel>
-                        ) : (
+                        ) : !disableBtn ? (
                             <SaveHotel type="submit" form="change-hotel" onClick={() => setChangeHotel(true)}>
                                 Alterar Hotel
                             </SaveHotel>
+                        ) : (
+                            <SaveHotel disabled>Salvando...</SaveHotel>
                         )}
                     </div>
                 </>

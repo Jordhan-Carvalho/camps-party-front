@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from "axios";
 import Button from "../../utils/Button";
 
 export default function OverviewPage({value}) {
-    
+    const [disableBtn, setDisableBtn] = useState(false);
     let {
         user,
         userInfo,
@@ -13,6 +14,19 @@ export default function OverviewPage({value}) {
         ticketType, setTicketType,
         changeType, setChangeType                
       } = value;
+
+    const newPersonalInfo = () => {
+        setDisableBtn(true);
+        setChangePersonal(false);
+        axios.post(
+            `${process.env.REACT_APP_BACKURL}/api/registration/personal-info`,
+            { address, phone },
+            { headers: { "x-access-token": user.token } }
+        ).then(() => {        
+            setDisableBtn(false);
+        })
+        .catch((err) => console.log(err))
+    }
 
     return (
         <>
@@ -44,18 +58,20 @@ export default function OverviewPage({value}) {
 
                 <span>{CPF}</span>
 
-                { !changePersonal ? (
+                { !changePersonal && !disableBtn ? (
                 <Button 
                     className="change-personal"
                     onClick={() => setChangePersonal(true)}>
                     Alterar dados
                 </Button>
-                ) : (
+                ) : !disableBtn ? (
                 <Button 
                     className="change-personal"
-                    onClick={() => setChangePersonal(false)}>
+                    onClick={() => newPersonalInfo()}>
                     Salvar dados
                 </Button>
+                ) : (
+                    <Button disabled>Salvando...</Button>
                 )}
 
             </div>
@@ -85,22 +101,22 @@ export default function OverviewPage({value}) {
 
                     </select>
                 </span>                  
-                {!changeType ? (
-                <Button 
-                className="change-ticket" 
-                onClick={() => setChangeType(true)}>
-                    Mudar tipo de ingresso
-                </Button>
+                {!changeType && !disableBtn ? (
+                    <Button 
+                    className="change-ticket" 
+                    onClick={() => setChangeType(true)}>
+                        Mudar tipo de ingresso
+                    </Button>
+                ) : !disableBtn ? (
+                    <Button                    
+                    form="ticket-form" 
+                    className="change-ticket" 
+                    onClick={() => setChangeType(false)}>
+                        Salvar ingresso
+                    </Button>
                 ) : (
-                <Button                    
-                form="ticket-form" 
-                className="change-ticket" 
-                onClick={() => setChangeType(false)}>
-                    Salvar ingresso
-                </Button>
-                )
-                }
-                
+                    <Button disabled>Salvando...</Button>
+                )}                
             </div>
         </>
     );

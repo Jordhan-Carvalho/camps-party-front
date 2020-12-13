@@ -38,6 +38,12 @@ export default function ResumePage() {
 
   useEffect(() => fetchFullReg(),[]);
 
+  const newTicket = () => {
+
+  }
+
+ 
+
   return (
     <>
       <Header />
