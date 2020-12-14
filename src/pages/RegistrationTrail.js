@@ -168,7 +168,7 @@ export default function RegistrationTrail() {
               }}
             >
               {listOptions.map((item) => (
-                <option key={item.id} value={item.id} selected>
+                <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
               ))}

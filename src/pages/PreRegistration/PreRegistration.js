@@ -14,9 +14,10 @@ export default function PreRegistration() {
   const [pwd, setPwd] = useState("");
   const [pwdConfirm, setPwdConfirm] = useState("");
   const [ticket, setTicket] = useState(null);
-  const [invalid, setInvalid] = useState("");
-  const [chooseTicket, setChooseTicket] = useState("");
-  const [persistTicketForm, setPersistTicketForm] = useState("");
+  const [invalid1, setInvalid1] = useState(false);
+  const [invalid2, setInvalid2] = useState(false);
+  const [chooseTicket, setChooseTicket] = useState(false);
+  const [persistTicketForm, setPersistTicketForm] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const history = useHistory();
@@ -29,17 +30,17 @@ export default function PreRegistration() {
     ticket,
   };
 
-  const nextForm = () => {
-    if (pwd !== pwdConfirm) return setInvalid("As senhas não são idênticas!");
-    setInvalid(false);
+  const next = () => {
+    if (pwd !== pwdConfirm) return setInvalid1("As senhas não são idênticas!");
+    setInvalid1(false);
     setChooseTicket(true);
-  };
+  };  
 
   const sendForm = (e) => {
     e.preventDefault();
-    setPersistTicketForm(true);
-    if (!ticket) return setInvalid("Nenhum ingresso selecionado!");
-    setInvalid(false);
+    setPersistTicketForm(true);     
+    if (!ticket) return setInvalid2("Nenhum ingresso selecionado!");
+    setInvalid2(false);
     setLoading(true);
     axios
       .post(`${process.env.REACT_APP_BACKURL}/api/users/sign-up`, preRegInfo)
@@ -55,7 +56,7 @@ export default function PreRegistration() {
       </Header>
       <Container>
         <Form value="center" id="form1" onSubmit={sendForm}>
-          {!chooseTicket && !persistTicketForm ? (
+          {!chooseTicket || !persistTicketForm ? (
             <>
               <input
                 type="email"
@@ -88,9 +89,9 @@ export default function PreRegistration() {
                 required
               />
               <div className="btn-container">
-                <Button onClick={nextForm}>PROSSEGUIR</Button>
+                <Button onClick={next}>PROSSEGUIR</Button>
               </div>
-              {invalid ? <span className="invalid">{invalid}</span> : ""}
+              {invalid1 ? <span className="invalid">{invalid1}</span> : ""}
             </>
           ) : (
             <>
@@ -105,7 +106,7 @@ export default function PreRegistration() {
                   </Button>
                 )}
               </div>
-              {invalid ? <span className="invalid">{invalid}</span> : ""}
+              {!ticket ? <span className="invalid">{invalid2}</span> : ""}
             </>
           )}
         </Form>

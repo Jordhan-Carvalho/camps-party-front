@@ -11,7 +11,7 @@ import PreRegSuccess from "./pages/PreRegSuccess";
 import Registration from "./pages/RegistrationPage/Registration";
 import RegistrationTrail from "./pages/RegistrationTrail";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
-import ResumePage from "./pages/ResumePage";
+import ResumePage from "./pages/ResumePage/ResumePage";
 
 export default function App() {
   return (
