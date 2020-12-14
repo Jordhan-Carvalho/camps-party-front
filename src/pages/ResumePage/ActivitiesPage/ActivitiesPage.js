@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from "axios";
 import styled from "styled-components";
 import Button from "../../../utils/Button";
-
+import DaysRestriction from "./DaysRestriction";
 
 import TrailOptions from "./TrailOptions";
 
@@ -12,19 +12,12 @@ export default function ActivitiesPage({value}) {
     const [disableDay1, setDisableDay1] = useState(false);
     const [disableDay2, setDisableDay2] = useState(false);
     const [disableDay3, setDisableDay3] = useState(false);
-    const [loading, setLoading] = useState(false)
-
-    const [morning, setMorning] = useState("Gaming");
-    const [afternoon, setAfternoon] = useState("Gaming");
-    const [night, setNight] = useState("Gaming");
+    const [loading, setLoading] = useState(false);
+    const [restrictionMsg, setRestrictionMsg] = useState(false);
 
     const [dayOne, setDayOne] = useState("");
     const [dayTwo, setDayTwo] = useState("");
-    const [dayThree, setDayThree] = useState("");
-    
-    const handleTrails = (state) => {
-        state(false);
-    };
+    const [dayThree, setDayThree] = useState("");    
 
     const fetchTrails = () => {
         axios.get(
@@ -32,14 +25,32 @@ export default function ActivitiesPage({value}) {
             { headers: { "x-access-token": user.token } }        
         )
         .then(({data}) => {
-            setDayOne({...data.trails[0].dayOne, day: 1})
-            setDayTwo({...data.trails[1].dayTwo, day: 2})
-            setDayThree({...data.trails[2].dayThree, day: 3})
+            setDayOne(data.trails[0].dayOne);
+            setDayTwo(data.trails[1].dayTwo);
+            setDayThree(data.trails[2].dayThree);
         })
         .catch(err => console.log(err))
     }
 
-    useEffect(() => fetchTrails(),[]); 
+    useEffect(() => fetchTrails(),[]);
+
+    const updateTrails = (state) => {        
+        if(DaysRestriction(dayTwo,dayThree,setRestrictionMsg)) return console.log("deu ruim");
+
+        state(false);
+        setLoading(true);
+        setRestrictionMsg(false);
+
+        axios.post(
+            `${process.env.REACT_APP_BACKURL}/api/trails/post-trails`,
+            [{"dayOne" : dayOne}, {"dayTwo": dayTwo}, {"dayThree": dayThree}],
+            { headers: { "x-access-token": user.token } }        
+        )
+        .then(() => {            
+            setLoading(false)
+        })
+        .catch(err => console.log(err))
+    };
 
     
 
@@ -53,16 +64,14 @@ export default function ActivitiesPage({value}) {
                 <DaysColumns>
                     <h3>Dia 1</h3>
                     <TrailOptions value={{
+                        dayNumber: 1,
                         day: dayOne, setDay: setDayOne,
-                        morning, setMorning,
-                        afternoon, setAfternoon,
-                        night, setNight,
                         disableBtn: disableDay1
                     }}/>
                     {!disableDay1 && !disableDay2 && !disableDay3 ? (
                         <CustomBtn onClick={() => setDisableDay1(true)}>Alterar</CustomBtn>
                     ) : !disableDay2 && !disableDay3 ? (
-                        <CustomBtn disabled={loading} onClick={() => handleTrails(setDisableDay1)}>Salvar</CustomBtn>
+                        <CustomBtn disabled={loading} onClick={() => updateTrails(setDisableDay1)}>Salvar</CustomBtn>
                     ) : (
                         <CustomBtn disabled>Alterar</CustomBtn>
                     )}                    
@@ -71,43 +80,48 @@ export default function ActivitiesPage({value}) {
                 <DaysColumns>
                     <h3>Dia 2</h3>
                     <TrailOptions value={{
+                        dayNumber: 2,
                         day: dayTwo, setDay: setDayTwo,
-                        morning, setMorning,
-                        afternoon, setAfternoon,
-                        night, setNight,
                         disableBtn: disableDay2
                     }}/>    
                     {!disableDay2 && !disableDay1 && !disableDay3 ? (
                         <CustomBtn onClick={() => setDisableDay2(true)}>Alterar</CustomBtn>
                     ) : !disableDay1 && !disableDay3 ? (
-                        <CustomBtn disabled={loading} onClick={() => handleTrails(setDisableDay2)}>Salvar</CustomBtn>
+                        <CustomBtn disabled={loading} onClick={() => updateTrails(setDisableDay2)}>Salvar</CustomBtn>
                     ) : (
                         <CustomBtn disabled>Alterar</CustomBtn>
-                    )}  
+                    )}
+                    
                 </DaysColumns>
 
                 <DaysColumns>
                     <h3>Dia 3</h3>
                     <TrailOptions value={{
+                        dayNumber: 3,
                         day: dayThree, setDay: setDayThree,
-                        morning, setMorning,
-                        afternoon, setAfternoon,
-                        night, setNight,
                         disableBtn: disableDay3
                     }}/>
                     {!disableDay3 && !disableDay2 && !disableDay1 ? (
                         <CustomBtn onClick={() => setDisableDay3(true)}>Alterar</CustomBtn>
                     ) : !disableDay2 && !disableDay1 ? (
-                        <CustomBtn disabled={loading} onClick={() => handleTrails(setDisableDay3)}>Salvar</CustomBtn>
+                        <CustomBtn disabled={loading} onClick={() => updateTrails(setDisableDay3)}>Salvar</CustomBtn>
                     ): (
                         <CustomBtn disabled>Alterar</CustomBtn>
-                    )}  
+                    )}
+                    
                 </DaysColumns>
-
+                
             </ActivitiesContainer>
+            {restrictionMsg ? <ErrMsg>{restrictionMsg}</ErrMsg> : ""}
         </>
     );
 }
+
+const ErrMsg = styled.p`
+    width:100%;
+    padding-top: 3rem;
+    text-align:center;
+`;
 
 const CustomBtn = styled(Button)`    
     max-width:5rem;    
@@ -127,6 +141,7 @@ const DaysColumns = styled.aside`
     flex-direction:column;
     align-items:center;
     justify-content:space-evenly;
+
 
     .slot {
       display: flex;

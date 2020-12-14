@@ -7,14 +7,16 @@ import { WiHorizonAlt } from 'react-icons/wi';
 export default function TrailOptions({value}) {
 
     const {
+        dayNumber,
         day, setDay,
-        morning, setMorning,
-        afternoon, setAfternoon,
-        night, setNight,
         disableBtn
     } = value;   
     
-    console.log(day)
+    const trailObj = {
+        morning: day.morning,
+        afternoon: day.afternoon,
+        night: day.night
+    }
 
     const listOptions = [
         { id: "Gaming", name: "Gaming" },
@@ -34,15 +36,18 @@ export default function TrailOptions({value}) {
                 className="select"
                 value={day.morning}
                 onChange={(e) => {
-                    if (e.target.value === "Hacking" && day.day === 2 ) {
-                        setDay(day.afternoon = "Hacking");
-                        setDay(day.night = "Hacking");
+                    if (e.target.value === "Hacking" && dayNumber === 2 ) {
+                        trailObj.afternoon = "Hacking";
+                        trailObj.night = "Hacking"
+                        setDay({...trailObj});                        
                     }
-                    if (e.target.value === "Gaming" && day.day === 3 ) {
-                        setDay(day.afternoon = "Gaming");
-                        setDay(day.night = "Gaming");
+                    if (e.target.value === "Gaming" && dayNumber === 3 ) {
+                        trailObj.afternoon = "Gaming";
+                        trailObj.night = "Gaming";
+                        setDay({...trailObj});
                     }
-                    setDay(day.morning = e.target.value);
+                    trailObj.morning = e.target.value;
+                    setDay({...trailObj});
                 }}
                 >
                 {listOptions.map((item) => (
@@ -62,15 +67,18 @@ export default function TrailOptions({value}) {
                 className="select"
                 value={day.afternoon}
                 onChange={(e) => {
-                    if (e.target.value === "Hacking" ) {
-                        setDay(day.afternoon = "Hacking");
-                        setDay(day.night = "Hacking");
+                    if (e.target.value === "Hacking" && dayNumber === 2) {
+                        trailObj.afternoon = "Hacking";
+                        trailObj.night = "Hacking"
+                        setDay({...trailObj}); 
                     }
-                    if (e.target.value === "Gaming" ) {
-                        setDay(day.afternoon = "Gaming");
-                        setDay(day.night = "Gaming");
+                    if (e.target.value === "Gaming" && dayNumber === 3) {
+                        trailObj.afternoon = "Gaming";
+                        trailObj.night = "Gaming";
+                        setDay({...trailObj});
                     }
-                    setDay(day.afternoon = e.target.value);
+                    trailObj.afternoon = e.target.value;
+                    setDay({...trailObj});
                 }}
                 >
                 {listOptions.map((item) => (
@@ -90,15 +98,18 @@ export default function TrailOptions({value}) {
                 className="select"
                 value={day.night}
                 onChange={(e) => {
-                    if (e.target.value === "Hacking") {
-                        setDay(day.afternoon = "Hacking");
-                        setDay(day.night = "Hacking");
+                    if (e.target.value === "Hacking" && dayNumber === 2) {
+                        trailObj.afternoon = "Hacking";
+                        trailObj.night = "Hacking"
+                        setDay({...trailObj}); 
                     }
-                    if (e.target.value === "Gaming") {
-                        setDay(day.afternoon = "Gaming");
-                        setDay(day.night = "Gaming");
+                    if (e.target.value === "Gaming" && dayNumber === 3) {
+                        trailObj.afternoon = "Gaming";
+                        trailObj.night = "Gaming";
+                        setDay({...trailObj});
                     }
-                    setDay(day.night = e.target.value);
+                    trailObj.night = e.target.value;
+                    setDay({...trailObj});
                 }}
                 >
                 {listOptions.map((item) => (
